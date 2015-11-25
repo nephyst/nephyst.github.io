@@ -47,6 +47,22 @@ var Vector = {
   },
   divide: function(value) {
     return Vector.create(this._x / value, this._y / value);
+  },
+  addTo: function(v2) {
+    this._x += v2.getX();
+    this._y += v2.getY();
+  },
+  subtractFrom: function(v2) {
+    this._x -= v2.getX();
+    this._y -= v2.getY();
+  },
+  multiplyBy: function(value) {
+    this._x *= v2.getX();
+    this._y *= v2.getY();
+  },
+  divideBy: function(value) {
+    this._x /= v2.getX();
+    this._y /= v2.getY();
   }
 
 };
