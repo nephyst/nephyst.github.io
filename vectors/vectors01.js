@@ -1,46 +1,15 @@
-window.onload = function() {
-	var canvas = document.getElementById("canvas"),
-		context = canvas.getContext("2d"),
-		width = canvas.width = window.innerWidth,
-		height = canvas.height = window.innerHeight,
-		scale = 200;
 
-	context.fillRect(0, 0, width, height);
-	context.translate(0, height/2);
-	context.scale(1, -1);
+var v1 = Vector.create(10, 5);
+console.log(v1.getX(), v1.getY(), v1.getAngle(), v1.getLength());
 
-	context.lineWidth = 3;
-	context.strokeStyle = '#999999';
-	context.beginPath();
-	context.moveTo(0,0);
-	context.lineTo(400 * Math.PI,0);
-	context.stroke();
+v1.setAngle(Math.PI / 6);
+v1.setLength(100);
+console.log(v1.getX(), v1.getY(), v1.getAngle(), v1.getLength());
 
-	for (var angle = 0; angle < 2*Math.PI; angle += 0.0005) {
-		var x = scale * angle,
-				y = scale * Math.sin(angle);
-		context.fillStyle = '#ff0000';
-		context.fillRect(x, y, 5, 5);
+var v2 = Vector.create(10, 5);
+var v3 = Vector.create(3, 4);
+var v4 = v2.add(v3);
+console.log(v4.getX(), v4.getY());
 
-		y = scale * Math.asin(angle);
-		context.fillStyle = '#770000';
-		context.fillRect(x, y, 5, 5);
-		console.log(angle + ' ' + y);
-
-		y = scale * Math.cos(angle);
-		context.fillStyle = '#00ff00';
-		context.fillRect(x, y, 5, 5);
-
-		y = scale * Math.acos(angle);
-		context.fillStyle = '#007700';
-		context.fillRect(x, y, 5, 5);
-
-		y = scale * Math.tan(angle);
-		context.fillStyle = '#0000ff';
-		context.fillRect(x, y, 5, 5);
-
-		y = scale * Math.atan(angle);
-		context.fillStyle = '#000077';
-		context.fillRect(x, y, 5, 5);
-	}
-};
+var v5 = v2.multiply(2);
+console.log(v2.getLength(), v5.getLength());
