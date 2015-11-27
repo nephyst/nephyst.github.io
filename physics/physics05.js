@@ -36,15 +36,14 @@ window.onload = function() {
       context.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
       context.fill();
     }
-    console.log(particles[0]);
     requestAnimationFrame(update);
   }
 
   function createParticle() {
-    var particle = Particle.create(width / 2, height - 25, Math.random() * 10 + 8.5,
-      -Math.PI / 2 + lerp(Math.random(), -0.13, 0.13));
-    particle.color = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-    particle.radius = Math.random() * 8 + 3;
+    var particle = Particle.create(width / 2, height - 25, randomRange(8.5, 18.5),
+      -Math.PI / 2 + randomRange(-0.13, 0.13));
+    particle.color = randomColor();
+    particle.radius = randomRange(3, 11);
     return particle;
   }
 
