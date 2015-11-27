@@ -57,12 +57,12 @@ var Vector = {
     this._y -= v2.getY();
   },
   multiplyBy: function(value) {
-    this._x *= v2.getX();
-    this._y *= v2.getY();
+    this._x *= value;
+    this._y *= value;
   },
   divideBy: function(value) {
-    this._x /= v2.getX();
-    this._y /= v2.getY();
+    this._x /= value;
+    this._y /= value;
   }
 
 };

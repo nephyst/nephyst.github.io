@@ -2,6 +2,7 @@ var Particle = {
   position: null,
   velocity: null,
   mass: 1,
+  friction: 1,
   color: null,
   radius: null,
 
@@ -14,6 +15,7 @@ var Particle = {
     return obj;
   },
   update: function() {
+    this.velocity.multiplyBy(this.friction);
     this.position.addTo(this.velocity);
   },
   accelerate: function(accel) {
@@ -35,5 +37,10 @@ var Particle = {
     gravity.setLength(p2.mass / (distance * distance));
     gravity.setAngle(this.angleTo(p2));
     this.accelerate(gravity);
+  },
+  springTo(spring, k) { //Vector, float
+    var springForce = spring.subtract(this.position);
+    springForce.multiplyBy(k);
+    this.accelerate(springForce);
   }
 }
