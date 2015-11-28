@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     numParticles = 250,
@@ -25,7 +25,7 @@ window.onload = function() {
   }
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     for (var i = 0; i < numParticles * numFireworks; i++) {
       var particle = particles[i];
@@ -36,11 +36,11 @@ window.onload = function() {
       particle.accelerate(gravity);
 
       var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
-      context.fillStyle = randomColor;
-      context.beginPath();
+      c.fillStyle = randomColor;
+      c.beginPath();
       var position = particle.position;
-      context.arc(position.getX(), position.getY(), 3, 0, Math.PI * 2, false);
-      context.fill();
+      c.arc(position.getX(), position.getY(), 3, 0, Math.PI * 2, false);
+      c.fill();
     }
 
     time++;

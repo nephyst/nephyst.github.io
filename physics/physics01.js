@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     particles = [],
@@ -12,15 +12,15 @@ window.onload = function() {
 
   update();
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     for (var i = 0; i < numParticles; i++) {
       var particle = particles[i];
       particle.update();
-      context.beginPath();
+      c.beginPath();
       var position = particle.position;
-      context.arc(position.getX(), position.getY(), 10, 0, Math.PI * 2, false);
-      context.fill();
+      c.arc(position.getX(), position.getY(), 10, 0, Math.PI * 2, false);
+      c.fill();
     }
 
     requestAnimationFrame(update);

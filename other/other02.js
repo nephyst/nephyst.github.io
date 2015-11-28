@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     randoms = [],
@@ -16,7 +16,7 @@ window.onload = function() {
   update();
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
     var min = max;
     for (var i = 0; i < count; i++) {
       min = Math.min(randoms[i], min);
@@ -24,16 +24,16 @@ window.onload = function() {
     for (var i = 0; i < count; i++) {
       var blue = Math.floor(map(randoms[i], min, max, 0, 255));
       var red = 255 - blue;
-      context.beginPath();
+      c.beginPath();
       var color = '#' + red.toString(16).padLeft(2, '0') + '00' + blue.toString(16).padLeft(2, '0');
-      context.fillStyle = color
-      context.rect(
+      c.fillStyle = color
+      c.rect(
         i * width / count,
         (1 - ((randoms[i] - min) / (max - min))) * height,
         width / count,
         ((randoms[i] - min) / (max - min)) * height);
-      context.fill();
-      context.closePath();
+      c.fill();
+      c.closePath();
     }
 
     for (var i = 0; i < 5; i++) {

@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
 
@@ -22,7 +22,7 @@ window.onload = function() {
 
   function render() {
     slice = 0;
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    c.clearRect(0, 0, canvas.width, canvas.height);
     for (var i = 0; i < numObjects; i++) {
       slice += 1.44;
       xangle = i * slice / 1.98 + time / 4 + xoffset;
@@ -30,9 +30,9 @@ window.onload = function() {
       x = centerX + Math.cos(xangle) * radius;
       y = centerY + Math.sin(yangle) * radius;
 
-      context.beginPath();
-      context.arc(x, y, 2, 0, Math.PI * 2, false);
-      context.fill();
+      c.beginPath();
+      c.arc(x, y, 2, 0, Math.PI * 2, false);
+      c.fill();
     }
 
     time += speed;

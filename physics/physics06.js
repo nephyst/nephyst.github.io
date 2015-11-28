@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     base = Vector.create(width / 2, height / 2),
@@ -13,19 +13,19 @@ window.onload = function() {
   update();
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     particle.springTo(base, 0.05);
     particle.update();
 
-    context.beginPath();
-    context.rect(base.getX() - 5, base.getY() - 5, 10, 10);
-    context.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
-    context.fill();
-    context.beginPath();
-    context.moveTo(base.getX(), base.getY());
-    context.lineTo(particle.position.getX(), particle.position.getY());
-    context.stroke();
+    c.beginPath();
+    c.rect(base.getX() - 5, base.getY() - 5, 10, 10);
+    c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+    c.fill();
+    c.beginPath();
+    c.moveTo(base.getX(), base.getY());
+    c.lineTo(particle.position.getX(), particle.position.getY());
+    c.stroke();
 
     requestAnimationFrame(update);
   }

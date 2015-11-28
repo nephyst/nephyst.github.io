@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight;
 
@@ -14,13 +14,13 @@ window.onload = function() {
   render();
 
   function render() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     var radius = baseRadius + Math.sin(angle) * offset;
 
-    context.beginPath();
-    context.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
-    context.fill();
+    c.beginPath();
+    c.arc(centerX, centerY, radius, 0, Math.PI * 2, false);
+    c.fill();
 
     angle += speed;
 

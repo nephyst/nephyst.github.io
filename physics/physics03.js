@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     ship = Particle.create(width / 2, height / 2, 0, 0),
@@ -47,7 +47,7 @@ window.onload = function() {
   });
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     //move ship
     angle += (0.05 * turningRight) - (0.05 * turningLeft);
@@ -57,43 +57,43 @@ window.onload = function() {
     thrust.setAngle(angle);
     thrust.setLength(0.05 * thrusting);
 
-    context.save();
-    context.translate(ship.position.getX(), ship.position.getY());
-    context.rotate(angle);
+    c.save();
+    c.translate(ship.position.getX(), ship.position.getY());
+    c.rotate(angle);
 
     //draw ship
-    context.beginPath();
-    context.moveTo(15, 0);
-    context.lineTo(-15, -10);
-    context.lineTo(-15, 10);
-    context.closePath();
-    context.fill();
+    c.beginPath();
+    c.moveTo(15, 0);
+    c.lineTo(-15, -10);
+    c.lineTo(-15, 10);
+    c.closePath();
+    c.fill();
 
     if (turningRight) {
-      context.beginPath();
-      context.moveTo(-8, 7);
-      context.lineTo(-8, 11);
-      context.lineWidth = 3;
-      context.stroke();
+      c.beginPath();
+      c.moveTo(-8, 7);
+      c.lineTo(-8, 11);
+      c.lineWidth = 3;
+      c.stroke();
     }
     if (turningLeft) {
-      context.beginPath();
-      context.moveTo(-8, -7);
-      context.lineTo(-8, -11);
-      context.lineWidth = 3;
-      context.stroke();
+      c.beginPath();
+      c.moveTo(-8, -7);
+      c.lineTo(-8, -11);
+      c.lineWidth = 3;
+      c.stroke();
     }
     if (thrusting) {
-      context.beginPath();
-      context.moveTo(-15, 5);
-      context.lineTo(-20, 5);
-      context.moveTo(-15, -5);
-      context.lineTo(-20, -5);
-      context.lineWidth = 3;
-      context.stroke();
+      c.beginPath();
+      c.moveTo(-15, 5);
+      c.lineTo(-20, 5);
+      c.moveTo(-15, -5);
+      c.lineTo(-20, -5);
+      c.lineWidth = 3;
+      c.stroke();
     }
 
-    context.restore();
+    c.restore();
 
     if (ship.position.getX() < 0) {
       ship.position.setX(width);

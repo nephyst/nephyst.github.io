@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     particles = [],
@@ -9,7 +9,7 @@ window.onload = function() {
   update();
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
     if (particles.length < 500) {
       particles.push(createParticle());
@@ -31,10 +31,10 @@ window.onload = function() {
         particles[i] = particle;
       }
 
-      context.beginPath();
-      context.fillStyle = particle.color;
-      context.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
-      context.fill();
+      c.beginPath();
+      c.fillStyle = particle.color;
+      c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+      c.fill();
     }
     requestAnimationFrame(update);
   }

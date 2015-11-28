@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     sun = Particle.create(width / 2, height / 2, 0, 0),
@@ -22,20 +22,20 @@ window.onload = function() {
   update();
 
   function update() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
-    context.beginPath();
-    context.fillStyle = '#ffff00';
-    context.arc(sun.position.getX(), sun.position.getY(), 50, 0, Math.PI * 2, false);
-    context.fill();
+    c.beginPath();
+    c.fillStyle = '#ffff00';
+    c.arc(sun.position.getX(), sun.position.getY(), 50, 0, Math.PI * 2, false);
+    c.fill();
 
     for (var i = 0; i < planets.length; i++) {
       planets[i].gravitateTo(sun);
       planets[i].update();
-      context.beginPath();
-      context.fillStyle = planets[i].color;
-      context.arc(planets[i].position.getX(), planets[i].position.getY(), planets[i].size, 0, Math.PI * 2, false);
-      context.fill();
+      c.beginPath();
+      c.fillStyle = planets[i].color;
+      c.arc(planets[i].position.getX(), planets[i].position.getY(), planets[i].size, 0, Math.PI * 2, false);
+      c.fill();
     }
 
     requestAnimationFrame(update);

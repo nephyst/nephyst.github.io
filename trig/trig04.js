@@ -1,6 +1,6 @@
 window.onload = function() {
   var canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d"),
+    c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     arrowX = width / 2,
@@ -12,26 +12,26 @@ window.onload = function() {
   render();
 
   function render() {
-    context.clearRect(0, 0, width, height);
+    c.clearRect(0, 0, width, height);
 
-    context.save();
+    c.save();
     arrowX += dx / 15;
     dx -= dx / 15;
     arrowY += dy / 15;
     dy -= dy / 15;
-    context.translate(arrowX, arrowY);
-    context.rotate(angle);
+    c.translate(arrowX, arrowY);
+    c.rotate(angle);
 
-    context.beginPath();
-    context.moveTo(0, 0);
-    context.lineTo(-40, 0);
-    context.moveTo(0, 0);
-    context.lineTo(-10, -10);
-    context.moveTo(0, 0);
-    context.lineTo(-10, 10);
-    context.stroke();
+    c.beginPath();
+    c.moveTo(0, 0);
+    c.lineTo(-40, 0);
+    c.moveTo(0, 0);
+    c.lineTo(-10, -10);
+    c.moveTo(0, 0);
+    c.lineTo(-10, 10);
+    c.stroke();
 
-    context.restore();
+    c.restore();
     requestAnimationFrame(render);
   }
 
