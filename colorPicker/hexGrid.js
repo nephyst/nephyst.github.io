@@ -9,12 +9,12 @@ window.onload = function() {
   var radius = 12;
   var xOffset = Math.sqrt(3) * radius;
   var yOffset = radius * 1.5;
-  var row = 0;
-  for (var y = 0; y < height + radius; y += yOffset, row++) {
-    for (var x = 0; x < width + radius; x += xOffset) {
+  for (var i = 0; i < height / yOffset; i++) { //rows
+    for (var j = 0; j < width / xOffset; j++) { //columns
+      var x = j * xOffset;
+      var y = i * yOffset;
       c.fillStyle = randomColor();
-      polygon(c, 6, x + (row % 2) * (xOffset / 2), y, radius);
-      console.log(x, y);
+      polygon(c, 6, x + (i % 2) * (xOffset / 2), y, radius);
     }
   }
   c.fill();
