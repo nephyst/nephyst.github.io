@@ -16,23 +16,16 @@ window.onload = function() {
     var ySpacing = radius * 1.5;
     var firstRow = 1 - count;
     var lastRow = count;
-
-    index = 0;
     for (var i = firstRow; i < count; i++) { //rows
       var firstCol = 1 - count + Math.floor(Math.abs(i / 2));
       var lastCol = count - Math.abs(i) + Math.floor(Math.abs(i / 2));
-      debug = "";
       for (var j = firstCol; j < lastCol; j++) { //columns
         var x = j * xSpacing + xOffset;
         var y = i * ySpacing + yOffset;
+        c.fillStyle = randomColor();
         polygon(c, 6, x + (Math.abs(i % 2) * (xSpacing / 2)), y, radius);
-
-        c.fillStyle = getPaletteColor(index++);
         c.fill();
-        debug += j - i + " ";
-        //debug += color + " ";
       }
-      console.log(debug);
     }
   }
 };

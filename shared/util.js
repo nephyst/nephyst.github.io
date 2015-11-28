@@ -29,13 +29,14 @@ function clamp(value, min, max) {
 function randomRange(min, max) {
   return lerp(Math.random(), min, max);
 }
-
 function randomInt(min, max) {
   return Math.floor(randomRange(max + 1, min));
 }
-
 function randomColor() {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+}
+function colorToHex(color) {
+  return color.toString(16).padLeft(2, '0');
 }
 //
 // Shapes
@@ -51,8 +52,6 @@ function polygon(c, sides, x, y, radius, angle) {
     c.lineTo(x + radius * Math.sin(angle), y - radius * Math.cos(angle));
   }
   c.closePath();
-  c.stroke();
-  c.fill();
 }
 //
 // Prototype definition
