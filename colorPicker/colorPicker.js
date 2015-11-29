@@ -3,17 +3,19 @@ window.onload = function() {
     c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
-    mouse = [0, 0],
-    hexRadius = 15,
-    count = 5,
-    selected = null,
-    selectedColor = null,
-    centerX = 200,
-    centerY = 175;
+    mouse = null,
+    hexRadius = 7,
+    count = 25,
+    centerX = width / 2,
+    centerY = height / 2,
+    selected = Hex.fromPixel(0, 0, hexRadius),
+    selectedColor = "#ffffff";
 
   update();
 
   function update() {
+    c.fillStyle = selectedColor;
+    c.fillRect(0, 0, width, height);
     colorGrid();
     greyScale();
     outlineSelected();
@@ -49,20 +51,22 @@ window.onload = function() {
   }
 
   function outlineSelected() {
-    var hex = Hex.fromPixel(mouse[0] - centerX, mouse[1] - centerY, hexRadius);
-    if (inRange(hex)) {
-      var hexPixel = hex.toPixel();
-      c.beginPath();
-      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius - 2);
-      c.lineWidth = 2;
-      c.fillStyle = '#000000';
-      c.stroke();
+    if (mouse) {
+      var hex = Hex.fromPixel(mouse[0], mouse[1], hexRadius);
+      if (inRange(hex)) {
+        var hexPixel = hex.toPixel();
+        c.beginPath();
+        polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
+        c.lineWidth = 3;
+        c.fillStyle = '#000000';
+        c.stroke();
+      }
     }
     if (selected) {
       var hexPixel = selected.toPixel();
       c.beginPath();
-      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius - 2);
-      c.lineWidth = 2;
+      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
+      c.lineWidth = 3;
       c.fillStyle = '#000000';
       c.stroke();
     }
@@ -84,13 +88,16 @@ window.onload = function() {
   }
 
   document.body.addEventListener("mousemove", function(event) {
-    mouse[0] = event.clientX;
-    mouse[1] = event.clientY;
+    mouse[0] = event.clientX - centerX;
+    mouse[1] = event.clientY - centerY;
   });
   document.body.addEventListener("click", function(event) {
     var hex = Hex.fromPixel(event.clientX - centerX, event.clientY - centerY, hexRadius);
     if (inRange(hex)) {
       selected = hex;
+      var pixel = hex.toPixel();
+      var data = c.getImageData(pixel[0] + centerX, pixel[1] + centerY, 1, 1).data;
+      selectedColor = "#" + colorToHex(data[0]) + colorToHex(data[1]) + colorToHex(data[2]);
     }
   });
 };
