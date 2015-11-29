@@ -32,6 +32,5 @@ window.onload = function() {
   document.body.addEventListener("mousemove", function(event) {
     base.setX(event.clientX);
     base.setY(event.clientY);
-
   });
 };
