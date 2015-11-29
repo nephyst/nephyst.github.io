@@ -1,6 +1,4 @@
-//This is a shitty way to do a color picker
-//but I really couldn't come up with a better way
-//that did what I wanted
+//No longer used, but keeping it in here anyway.
 function getPaletteColor(index) {
   return _colors[index % _colors.length];
 }

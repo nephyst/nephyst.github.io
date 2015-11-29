@@ -10,8 +10,16 @@ var Particle = {
     var obj = Object.create(this);
     obj.position = Vector.create(x, y);
     obj.velocity = Vector.create(0, 0);
-    obj.velocity.setLength(speed);
-    obj.velocity.setAngle(direction);
+    return obj;
+  },
+  clone: function() {
+    var obj = Object.create(this);
+    obj.position = this.position.clone();
+    obj.velocity = this.velocity.clone();
+    obj.mass = this.mass;
+    obj.friction = this.friction;
+    obj.color = this.color;
+    obj.radius = this.radius;
     return obj;
   },
   update: function() {

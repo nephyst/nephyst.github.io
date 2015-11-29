@@ -32,7 +32,7 @@ window.onload = function() {
       for (var j = firstCol; j <= lastCol; j++) { //columns
         var hex = Hex.create(j, i, hexRadius);
         var pixel = hex.toPixel();
-        polygon(c, 6, pixel[0] + centerX, pixel[1] + centerY, hexRadius);
+        polygon(c, 6, pixel[0] + centerX, pixel[1] + centerY, hexRadius + 1);
         c.fillStyle = getColor(hex);
         c.fill();
       }

@@ -8,6 +8,12 @@ var Vector = {
     obj.setY(y);
     return obj;
   },
+  clone: function() {
+    var obj = Object.create(this);
+    obj.setX(this._x);
+    obj.setY(this._y);
+    return obj;
+  },
   setX: function(value) {
     this._x = value;
   },
