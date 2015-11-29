@@ -36,7 +36,7 @@ function randomColor() {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
 }
 function colorToHex(color) {
-  return color.toString(16).padLeft(2, '0');
+  return Math.round(color).toString(16).padLeft(2, '0');
 }
 //
 // Shapes

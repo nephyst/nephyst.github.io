@@ -5,7 +5,7 @@ window.onload = function() {
     height = canvas.height = window.innerHeight,
     mouse = [0, 0],
     hexRadius = 15,
-    count = 7,
+    count = 5,
     selected = null,
     selectedColor = null,
     centerX = 200,
@@ -15,6 +15,8 @@ window.onload = function() {
 
   function update() {
     colorGrid();
+    greyScale();
+    outlineSelected();
     requestAnimationFrame(update);
   }
 
@@ -29,16 +31,29 @@ window.onload = function() {
         var hex = Hex.create(j, i, hexRadius);
         var pixel = hex.toPixel();
         polygon(c, 6, pixel[0] + centerX, pixel[1] + centerY, hexRadius);
-        c.fillStyle = getPaletteColor(index++);
+        c.fillStyle = getColor(hex);
         c.fill();
       }
     }
+  }
 
+  function greyScale() {
+    for (var i = -count; i < 1; i++) {
+      var hex = Hex.create(i, count, hexRadius);
+      var pixel = hex.toPixel();
+      polygon(c, 6, pixel[0] + centerX, pixel[1] + centerY, hexRadius);
+      var color = colorToHex(map(i, -count, 1, 210, 0));
+      c.fillStyle = "#" + color + color + color;
+      c.fill();
+    }
+  }
+
+  function outlineSelected() {
     var hex = Hex.fromPixel(mouse[0] - centerX, mouse[1] - centerY, hexRadius);
-    if (hex.distanceFromCenter() < count) {
+    if (inRange(hex)) {
       var hexPixel = hex.toPixel();
       c.beginPath();
-      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
+      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius - 2);
       c.lineWidth = 2;
       c.fillStyle = '#000000';
       c.stroke();
@@ -46,11 +61,26 @@ window.onload = function() {
     if (selected) {
       var hexPixel = selected.toPixel();
       c.beginPath();
-      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
+      polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius - 2);
       c.lineWidth = 2;
       c.fillStyle = '#000000';
       c.stroke();
     }
+  }
+
+  function getColor(hex) {
+    var pixel = hex.toPixel();
+    var x = pixel[0];
+    var y = pixel[1];
+    var h = Math.floor(Math.atan2(y, x) * 180 / Math.PI);
+    var l = map(hex.distanceFromCenter() / (count - 1), 0, 1, 100, 39);
+    var hsl = "hsl(" + h + ", 100%, " + l + "%)";
+    return hsl;
+  }
+
+  function inRange(hex) {
+    var d = hex.distanceFromCenter();
+    return (d < count || (hex.r == count && hex.q >= -count && hex.q < 1));
   }
 
   document.body.addEventListener("mousemove", function(event) {
@@ -59,7 +89,7 @@ window.onload = function() {
   });
   document.body.addEventListener("click", function(event) {
     var hex = Hex.fromPixel(event.clientX - centerX, event.clientY - centerY, hexRadius);
-    if (hex && hex.distanceFromCenter() < count) {
+    if (inRange(hex)) {
       selected = hex;
     }
   });
