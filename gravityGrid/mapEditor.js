@@ -91,7 +91,7 @@ window.onload = function() {
       var particle = objects[i];
       var p = toCoordinate(particle);
       if (particle.mass == 5) {
-        for (var j = -1; j < 2; q++) {
+        for (var j = -1; j < 2; j++) {
           for (var k = -1; k < 2; k++) {
             var j1 = Math.max(Math.min(p[0] + j, 6), 0);
             var k1 = Math.max(Math.min(p[1] + k, 6), 0);
