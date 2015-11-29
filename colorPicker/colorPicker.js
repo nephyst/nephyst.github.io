@@ -57,7 +57,7 @@ window.onload = function() {
         var hexPixel = hex.toPixel();
         c.beginPath();
         polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
-        c.lineWidth = 3;
+        c.lineWidth = 2;
         c.fillStyle = '#000000';
         c.stroke();
       }
@@ -66,7 +66,7 @@ window.onload = function() {
       var hexPixel = selected.toPixel();
       c.beginPath();
       polygon(c, 6, hexPixel[0] + centerX, hexPixel[1] + centerY, hexRadius);
-      c.lineWidth = 3;
+      c.lineWidth = 2;
       c.fillStyle = '#000000';
       c.stroke();
     }
@@ -88,6 +88,7 @@ window.onload = function() {
   }
 
   document.body.addEventListener("mousemove", function(event) {
+    mouse = [];
     mouse[0] = event.clientX - centerX;
     mouse[1] = event.clientY - centerY;
   });
