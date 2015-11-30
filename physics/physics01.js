@@ -11,6 +11,8 @@ window.onload = function() {
   }
 
   update();
+  update();
+
   function update() {
     c.clearRect(0, 0, width, height);
 
@@ -18,8 +20,7 @@ window.onload = function() {
       var particle = particles[i];
       particle.update();
       c.beginPath();
-      var position = particle.position;
-      c.arc(position.getX(), position.getY(), 10, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, 10, 0, Math.PI * 2, false);
       c.fill();
     }
 

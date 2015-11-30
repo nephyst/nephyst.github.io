@@ -34,7 +34,7 @@ window.onload = function() {
     for (var i = 0; i < objects.length; i++) {
       var particle = objects[i];
       c.beginPath();
-      c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2, false);
       c.fillStyle = particle.color;
       c.fill();
       c.lineWidth = 3;
@@ -43,8 +43,8 @@ window.onload = function() {
   }
 
   function isInsideCircle(particle, x, y) {
-    var px = particle.position.getX();
-    var py = particle.position.getY();
+    var px = particle.x;
+    var py = particle.y;
     var dx = x - px;
     var dy = y - py
     var distance = Math.sqrt(dx * dx + dy * dy);
@@ -57,9 +57,8 @@ window.onload = function() {
     for (var i = objects.length - 1; i >= 0; i--) {
       if (isInsideCircle(objects[i], x, y)) {
         dragging = i;
-        offsetX = objects[i].position.getX() - x;
-        offsetY = objects[i].position.getY() - y;
-        console.log(offsetX, offsetY);
+        offsetX = objects[i].x - x;
+        offsetY = objects[i].y - y;
         break;
       }
     }
@@ -69,11 +68,9 @@ window.onload = function() {
   });
   document.body.addEventListener("mousemove", function(event) {
     if (dragging > -1) {
-      var x = event.clientX;
-      var y = event.clientY;
       var particle = objects[dragging];
-      particle.position.setX(x + offsetX);
-      particle.position.setY(y + offsetY);
+      particle.x = event.clientX + offsetX;
+      particle.y = event.clientY + offsetY;
     }
   });
 

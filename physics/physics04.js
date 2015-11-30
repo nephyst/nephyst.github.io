@@ -26,7 +26,7 @@ window.onload = function() {
 
     c.beginPath();
     c.fillStyle = '#ffff00';
-    c.arc(sun.position.getX(), sun.position.getY(), 50, 0, Math.PI * 2, false);
+    c.arc(sun.x, sun.y, 50, 0, Math.PI * 2, false);
     c.fill();
 
     for (var i = 0; i < planets.length; i++) {
@@ -34,7 +34,7 @@ window.onload = function() {
       planets[i].update();
       c.beginPath();
       c.fillStyle = planets[i].color;
-      c.arc(planets[i].position.getX(), planets[i].position.getY(), planets[i].size, 0, Math.PI * 2, false);
+      c.arc(planets[i].x, planets[i].y, planets[i].size, 0, Math.PI * 2, false);
       c.fill();
     }
 

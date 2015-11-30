@@ -73,7 +73,7 @@ window.onload = function() {
     for (var i = 0; i < objects.length; i++) {
       var particle = objects[i];
       c.beginPath();
-      c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2, false);
       c.fillStyle = particle.color;
       c.fill();
       c.lineWidth = 3;
@@ -114,16 +114,16 @@ window.onload = function() {
   }
 
   function toCoordinate(particle) {
-    var x = particle.position.getX();
-    var y = particle.position.getY();
+    var x = particle.x;
+    var y = particle.y;
     x = Math.floor((x - left) / cellSize);
     y = Math.floor((y - top) / cellSize);
     return [x, y];
   }
 
   function isInsideCircle(particle, x, y) {
-    var px = particle.position.getX();
-    var py = particle.position.getY();
+    var px = particle.x;
+    var py = particle.y;
     var dx = x - px;
     var dy = y - py
     var distance = Math.sqrt(dx * dx + dy * dy);
@@ -136,8 +136,8 @@ window.onload = function() {
     for (var i = objects.length - 1; i >= 0; i--) {
       if (isInsideCircle(objects[i], x, y)) {
         dragging = i;
-        offsetX = objects[i].position.getX() - x;
-        offsetY = objects[i].position.getY() - y;
+        offsetX = objects[i].x - x;
+        offsetY = objects[i].y - y;
         break;
       }
     }
@@ -147,26 +147,24 @@ window.onload = function() {
       return;
     }
     var particle = objects[dragging];
-    var x = particle.position.getX();
-    var y = particle.position.getY();
+    var x = particle.x;
+    var y = particle.y;
     if (x > left && x < right && y > top && y < right) {
       if (dragging < 5) {
         var sourceParticle = particle;
         particle = sourceParticle.clone();
-        sourceParticle.position.setX(left - 100);
-        sourceParticle.position.setY((dragging + 1) * 75);
+        sourceParticle.x = left - 100;
+        sourceParticle.y = (dragging + 1) * 75;
         objects.push(particle);
       }
       var coord = toCoordinate(particle);
-      x = (coord[0] + 0.5) * cellSize + left;
-      y = (coord[1] + 0.5) * cellSize + top;
-      particle.position.setX(x);
-      particle.position.setY(y);
+      particle.x = (coord[0] + 0.5) * cellSize + left;
+      particle.y = (coord[1] + 0.5) * cellSize + top;
     } else if (dragging >= 5) {
       objects.splice(dragging, 1);
     } else {
-      particle.position.setX(left - 100);
-      particle.position.setY((dragging + 1) * 75);
+      particle.x = left - 100;
+      particle.y = (dragging + 1) * 75;
     }
     dragging = -1;
     generateMapText();
@@ -176,11 +174,9 @@ window.onload = function() {
       return;
     }
     if (dragging > -1) {
-      var x = event.clientX;
-      var y = event.clientY;
       var particle = objects[dragging];
-      particle.position.setX(x + offsetX);
-      particle.position.setY(y + offsetY);
+      particle.x = event.clientX + offsetX;
+      particle.y = event.clientY + offsetY;
     }
   });
 

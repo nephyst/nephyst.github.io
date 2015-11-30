@@ -60,7 +60,7 @@ window.onload = function() {
     for (var i = 0; i < objects.length; i++) {
       var particle = objects[i];
       c.beginPath();
-      c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2, false);
       c.fillStyle = particle.color;
       c.fill();
       c.lineWidth = 3;
@@ -69,8 +69,8 @@ window.onload = function() {
   }
 
   function isInsideCircle(particle, x, y) {
-    var px = particle.position.getX();
-    var py = particle.position.getY();
+    var px = particle.x;
+    var py = particle.y;
     var dx = x - px;
     var dy = y - py
     var distance = Math.sqrt(dx * dx + dy * dy);
@@ -83,31 +83,27 @@ window.onload = function() {
     for (var i = objects.length - 1; i >= 0; i--) {
       if (isInsideCircle(objects[i], x, y)) {
         dragging = i;
-        offsetX = objects[i].position.getX() - x;
-        offsetY = objects[i].position.getY() - y;
+        offsetX = objects[i].x - x;
+        offsetY = objects[i].y - y;
         break;
       }
     }
   });
   document.body.addEventListener("mouseup", function(event) {
     var particle = objects[dragging];
-    var x = particle.position.getX();
-    var y = particle.position.getY();
+    var x = particle.x;
+    var y = particle.y;
     if (x > left && x < right && y > top && y < right) {
-      x = (Math.floor((x - left) / cellSize) + 0.5) * cellSize + left;
-      y = (Math.floor((y - top) / cellSize) + 0.5) * cellSize + top;
-      particle.position.setX(x);
-      particle.position.setY(y);
+      particle.x = (Math.floor((x - left) / cellSize) + 0.5) * cellSize + left;
+      particle.y = (Math.floor((y - top) / cellSize) + 0.5) * cellSize + top;
     }
     dragging = -1;
   });
   document.body.addEventListener("mousemove", function(event) {
     if (dragging > -1) {
-      var x = event.clientX;
-      var y = event.clientY;
       var particle = objects[dragging];
-      particle.position.setX(x + offsetX);
-      particle.position.setY(y + offsetY);
+      particle.x = event.clientX + offsetX;
+      particle.y = event.clientY + offsetY;
     }
   });
 

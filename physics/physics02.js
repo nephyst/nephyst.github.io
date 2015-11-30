@@ -6,7 +6,7 @@ window.onload = function() {
     numParticles = 250,
     numFireworks = 3;
   particles = [numParticles * numFireworks],
-  gravity = Vector.create(0, 0.04),
+  gravity = 0.04,
   time = 0,
   fireworkIndex = 0;
 
@@ -33,13 +33,12 @@ window.onload = function() {
         continue;
       }
       particle.update();
-      particle.accelerate(gravity);
+      particle.accelerate(0, gravity);
 
       var randomColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
       c.fillStyle = randomColor;
       c.beginPath();
-      var position = particle.position;
-      c.arc(position.getX(), position.getY(), 3, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, 3, 0, Math.PI * 2, false);
       c.fill();
     }
 

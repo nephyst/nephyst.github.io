@@ -4,7 +4,7 @@ window.onload = function() {
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     ship = Particle.create(width / 2, height / 2, 0, 0),
-    thrust = Vector.create(0, 0),
+    thrust = Vector.create(0,0),
     angle = 0,
     turningLeft = false,
     turningRight = false,
@@ -51,14 +51,14 @@ window.onload = function() {
 
     //move ship
     angle += (0.05 * turningRight) - (0.05 * turningLeft);
-    ship.accelerate(thrust);
+    ship.accelerate(thrust.getX(), thrust.getY());
     ship.update();
 
     thrust.setAngle(angle);
     thrust.setLength(0.05 * thrusting);
 
     c.save();
-    c.translate(ship.position.getX(), ship.position.getY());
+    c.translate(ship.x, ship.y);
     c.rotate(angle);
 
     //draw ship
@@ -95,17 +95,17 @@ window.onload = function() {
 
     c.restore();
 
-    if (ship.position.getX() < 0) {
-      ship.position.setX(width);
+    if (ship.x < 0) {
+      ship.x = width;
     }
-    if (ship.position.getY() < 0) {
-      ship.position.setY(height);
+    if (ship.y < 0) {
+      ship.y = height;
     }
-    if (ship.position.getX() > width) {
-      ship.position.setX(0);
+    if (ship.x > width) {
+      ship.x = 0;
     }
-    if (ship.position.getY() > height) {
-      ship.position.setY(0);
+    if (ship.y > height) {
+      ship.y = 0;
     }
 
     requestAnimationFrame(update);

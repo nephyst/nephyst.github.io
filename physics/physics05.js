@@ -4,7 +4,7 @@ window.onload = function() {
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
     particles = [],
-    gravity = Vector.create(0, 0.25);
+    gravity = 0.25;
 
   update();
 
@@ -18,12 +18,12 @@ window.onload = function() {
     for (var i = 0; i < particles.length; i++) {
       var particle = particles[i];
       particle.update();
-      particle.accelerate(gravity);
+      particle.accelerate(0, gravity);
 
-      if (particle.position.getY() + particle.radius > height) {
-        particle.velocity.setY(-particle.velocity.getY() * 0.5);
-        particle.velocity.setX(particle.velocity.getX() * 0.97);
-        particle.position.setY(height - particle.radius + 1);
+      if (particle.y + particle.radius > height) {
+        particle.vx = particle.vx * 0.97;
+        particle.vy = -particle.vy * 0.5;
+        particle.y = height - particle.radius + 1;
         particle.radius -= 0.05;
       }
       if (particle.radius < 0.06) {
@@ -33,15 +33,14 @@ window.onload = function() {
 
       c.beginPath();
       c.fillStyle = particle.color;
-      c.arc(particle.position.getX(), particle.position.getY(), particle.radius, 0, Math.PI * 2, false);
+      c.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2, false);
       c.fill();
     }
     requestAnimationFrame(update);
   }
 
   function createParticle() {
-    var particle = Particle.create(width / 2, height - 25, randomRange(8.5, 18.5),
-      -Math.PI / 2 + randomRange(-0.13, 0.13));
+    var particle = Particle.create(width / 2, height - 25, randomRange(8.5, 18.5), -Math.PI / 2 + randomRange(-0.13, 0.13));
     particle.color = randomColor();
     particle.radius = randomRange(3, 11);
     return particle;

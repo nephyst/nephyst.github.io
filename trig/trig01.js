@@ -25,7 +25,6 @@ window.onload = function() {
     y = scale * Math.asin(angle);
     c.fillStyle = '#770000';
     c.fillRect(x, y, 5, 5);
-    console.log(angle + ' ' + y);
 
     y = scale * Math.cos(angle);
     c.fillStyle = '#00ff00';

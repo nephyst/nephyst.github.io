@@ -1,6 +1,8 @@
 var Particle = {
-  position: null,
-  velocity: null,
+  x: 0,
+  y: 0,
+  vx: 0,
+  vy: 0,
   mass: 1,
   friction: 1,
   color: null,
@@ -8,14 +10,18 @@ var Particle = {
 
   create: function(x, y, speed, direction) {
     var obj = Object.create(this);
-    obj.position = Vector.create(x, y);
-    obj.velocity = Vector.create(0, 0);
+    obj.x = x;
+    obj.y = y;
+    obj.vx = Math.cos(direction) * speed;
+    obj.vy = Math.sin(direction) * speed;
     return obj;
   },
   clone: function() {
     var obj = Object.create(this);
-    obj.position = this.position.clone();
-    obj.velocity = this.velocity.clone();
+    obj.x = this.x;
+    obj.y = this.y;
+    obj.vx = this.vx;
+    obj.vy = this.vy;
     obj.mass = this.mass;
     obj.friction = this.friction;
     obj.color = this.color;
@@ -23,32 +29,41 @@ var Particle = {
     return obj;
   },
   update: function() {
-    this.velocity.multiplyBy(this.friction);
-    this.position.addTo(this.velocity);
+    this.vx *= this.friction;
+    this.vy *= this.friction;
+    this.x += this.vx;
+    this.y += this.vy;
   },
-  accelerate: function(accel) {
-    this.velocity.addTo(accel);
+  accelerate: function(ax, ay) {
+    this.vx += ax;
+    this.vy += ay;
   },
   angleTo(p2) {
-    var dy = p2.position.getY() - this.position.getY();
-    var dx = p2.position.getX() - this.position.getX();
+    var dx = p2.x - this.x;
+    var dy = p2.y - this.y;
     return Math.atan2(dy, dx);
   },
   distanceTo(p2) {
-    var dy = p2.position.getY() - this.position.getY();
-    var dx = p2.position.getX() - this.position.getX();
+    var dx = p2.x - this.x;
+    var dy = p2.y - this.y;
     return Math.sqrt(dx * dx + dy * dy);
   },
   gravitateTo(p2) {
-    var gravity = Vector.create(0, 0);
-    var distance = this.distanceTo(p2);
-    gravity.setLength(p2.mass / (distance * distance));
-    gravity.setAngle(this.angleTo(p2));
-    this.accelerate(gravity);
+    var dx = p2.x - this.x,
+      dy = p2.y - this.y,
+      distSq = dx * dx + dy * dy,
+      distance = Math.sqrt(distSq),
+      angle = this.angleTo(p2),
+      force = p2.mass / distSq,
+      ax = dx / distance * force,
+      ay = dy / distance * force;
+
+    this.vx += ax;
+    this.vy += ay;
   },
-  springTo(spring, k) { //Vector, float
-    var springForce = spring.subtract(this.position);
-    springForce.multiplyBy(k);
-    this.accelerate(springForce);
+  springTo(x, y, k) {
+    var dx = (x - this.x) * k;
+    var dy = (y - this.y) * k;
+    this.accelerate(dx, dy);
   }
 }
