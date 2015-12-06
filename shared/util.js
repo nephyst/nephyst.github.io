@@ -29,12 +29,15 @@ function clamp(value, min, max) {
 function randomRange(min, max) {
   return lerp(Math.random(), min, max);
 }
+
 function randomInt(min, max) {
   return Math.floor(randomRange(max + 1, min));
 }
+
 function randomColor() {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
 }
+
 function colorToHex(color) {
   return Math.round(color).toString(16).padLeft(2, '0');
 }
@@ -53,6 +56,21 @@ function polygon(c, sides, x, y, radius, angle) {
   }
   c.closePath();
 }
+
+function roundRect(c, x, y, width, height, radius) {
+  radius = radius || 5;
+  c.beginPath();
+  c.moveTo(x + radius, y);
+  c.lineTo(x + width - radius, y);
+  c.quadraticCurveTo(x + width, y, x + width, y + radius);
+  c.lineTo(x + width, y + height - radius);
+  c.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  c.lineTo(x + radius, y + height);
+  c.quadraticCurveTo(x, y + height, x, y + height - radius);
+  c.lineTo(x, y + radius);
+  c.quadraticCurveTo(x, y, x + radius, y);
+  c.closePath();
+}
 //
 // Prototype definition
 //
@@ -69,4 +87,22 @@ String.prototype.padLeft = function(size, char) {
     s = char + s;
   }
   return s;
+}
+
+Array.prototype.fill = function(value) {
+  var i = this.length;
+  while (i--) {
+    this[i] = value;
+  }
+}
+
+Array.prototype.randomFill = function(value) {
+  var temp = [];
+  for (var i = 1; i <= value; i++) {
+    temp.push(i);
+  }
+  while (temp.length > 0) {
+    var random = randomInt(0, temp.length - 1);
+    this.push(temp.splice(random, 1)[0]);
+  }
 }
