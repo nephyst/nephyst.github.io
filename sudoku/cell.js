@@ -1,6 +1,7 @@
 var Cell = {
   particle: null,
-  values: null,
+  values: null, //system calculated hints
+  notes: null, //manual notes
   locked: null,
   error: null,
   //used in generate
@@ -10,9 +11,9 @@ var Cell = {
   create: function() {
     var obj = Object.create(this);
     obj.values = new Array(9);
-    for (var i = 0; i < obj.values.length; i++) {
-      obj.values[i] = true;
-    }
+    obj.notes = new Array(9);
+    obj.values.fill(true);
+    obj.notes.fill(true)
     return obj;
   }
 }

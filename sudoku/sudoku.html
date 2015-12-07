@@ -9,15 +9,58 @@
 </head>
 
 <body>
-	<canvas id="canvas"></canvas>
+	<div class="container">
+		<div class="left">
+			<strong>Sudoku!</strong>
+			<button class="minimal" id="createButton">New Puzzle</button>
+			<button class="minimal" id="solveButton">Solve Puzzle</button>
+			<button class="minimal" id="clearButton">Clear Puzzle</button>
+			<hr>
+			<button class="minimal" id="hintsButton">Manual Notes</button>
+		</div>
+		<div class="right">
+			<canvas id="canvas">Your browser doesn't support canvas</canvas>
+		</div>
+	</div>
 	<style type="text/css">
 		html,
 		body {
 			margin: 0px;
 		}
 
+		.container {
+			display: flex;
+			text-align: center;
+			color: #fff;
+		}
+
+		.left {
+			background-color: #4F628E;
+			width: 200px;
+			padding: 10px;
+		}
+
+		.right {
+			background-color: #94a9db;
+			flex-grow: 1;
+		}
+
 		canvas {
-			display: block;
+			display: inline;
+			align: center;
+		}
+
+		button.minimal {
+			background: #e3e3e3;
+			border: 1px solid #bbb;
+			border-radius: 3px;
+			color: #333;
+			font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
+			margin: 5px;
+			padding: 8px 0 9px;
+			text-align: center;
+			text-shadow: 0 1px 0 #fff;
+			width: 150px;
 		}
 	</style>
 </body>
