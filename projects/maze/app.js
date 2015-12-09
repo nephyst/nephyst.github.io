@@ -3,20 +3,36 @@ window.onload = function() {
     c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
-    roomSize = 25,
+    roomSize = 20,
     maze = Maze.create(Math.floor((width - roomSize) / roomSize), Math.floor((height - roomSize) / roomSize));
 
-  c.fillStyle = "#000";
-  c.fillRect(0, 0, width, height);
-  maze.build(0,0);
-  maze.draw(c, roomSize / 2, roomSize / 2, roomSize);
-  //update();
+  update();
 
   function update() {
-    c.clearRect(0, 0, width, height);
-
-
+    c.fillStyle = "#000";
+    c.fillRect(0, 0, width, height);
+    maze.draw(c, roomSize / 2, roomSize / 2, roomSize);
     requestAnimationFrame(update);
   }
+
+  document.body.addEventListener("keydown", function(event) {
+    switch (event.keyCode) {
+      case 37: //left
+        maze.move(maze.directionEnum.west);
+        break;
+      case 38: //up
+        maze.move(maze.directionEnum.north);
+        break;
+      case 39: //right
+        maze.move(maze.directionEnum.east);
+        break;
+      case 40: //down
+        maze.move(maze.directionEnum.south);
+        break;
+      default:
+        console.log(event.keyCode);
+        break;
+    }
+  });
 
 };

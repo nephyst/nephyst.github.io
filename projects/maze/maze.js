@@ -4,8 +4,20 @@ var Maze = {
     north: "north",
     south: "south",
     east: "east",
-    west: "west"
+    west: "west",
   }),
+  player: {
+    x: null,
+    y: null
+  },
+  entrance: {
+    x: null,
+    y: null
+  },
+  exit: {
+    x: null,
+    y: null
+  },
 
   create: function(width, height) {
     var obj = Object.create(this);
@@ -16,12 +28,17 @@ var Maze = {
         obj.grid[i][j] = Room.create();
       }
     }
+    obj.player.x = 0;
+    obj.player.y = 0;
+    obj.exit.x = width - 1;
+    obj.exit.y = height - 1;
+    obj.build(0, 0);
     return obj;
   },
 
   draw: function(c, x, y, roomSize) {
     c.strokeStyle = "#aaa";
-    c.lineWidth = 3;
+    c.lineWidth = 5;
     c.lineCap = "round";
     for (var i = 0; i < this.grid.length; i++) {
       var left = x + (i * roomSize);
@@ -55,9 +72,17 @@ var Maze = {
         }
       }
     }
+    c.beginPath();
+    c.fillStyle = "#00F";
+    c.arc(x + (this.player.x + 0.5) * roomSize, y + (this.player.y + 0.5) * roomSize, roomSize / 4, 0, Math.PI * 2, false);
+    c.fill();
+    c.beginPath();
+    c.fillStyle = "#F00";
+    c.arc(x + (this.exit.x + 0.5) * roomSize, y + (this.exit.y + 0.5) * roomSize, roomSize / 4, 0, Math.PI * 2, false);
+    c.fill();
   },
 
-  hasWall(x, y, direction) {
+  hasWall: function(x, y, direction) {
     if (x < 0 || y < 0 || x >= this.grid.length || y > this.grid[0].length) {
       return true;
     }
@@ -79,8 +104,16 @@ var Maze = {
     }
   },
 
-  build(x, y) { //input starting cell
-    console.log(x, y, this.grid);
+  reset: function() {
+    for (var i = 0; i < this.grid.length; i++) {
+      for (var j = 0; j < this.grid[i].length; j++) {
+        var room = this.grid[i][j];
+        room.reset();
+      }
+    }
+  },
+
+  build: function(x, y) { //input starting cell
     var room = this.grid[x] ? this.grid[x][y] : null;
     if (!room || room.visited) {
       return;
@@ -129,6 +162,45 @@ var Maze = {
         default:
           break;
       }
+    }
+  },
+
+  move: function(direction) {
+    var x = this.player.x;
+    var y = this.player.y;
+    switch (direction) {
+      case this.directionEnum.north:
+        var room = (y > 0) ? this.grid[x][y - 1] : null;
+        if (room && !room.southWall) {
+          --this.player.y;
+        }
+        break;
+      case this.directionEnum.south:
+        var room = this.grid[x][y];
+        if (room && !room.southWall) {
+          ++this.player.y;
+        }
+        break;
+      case this.directionEnum.east:
+        var room = this.grid[x][y];
+        if (room && !room.eastWall) {
+          ++this.player.x;
+        }
+        break;
+      case this.directionEnum.west:
+        var room = (x > 0) ? this.grid[x - 1][y] : null;
+        if (room && !room.eastWall) {
+          --this.player.x;
+        }
+        break;
+      default:
+        break;
+    }
+    if (this.player.x == this.exit.x && this.player.y == this.exit.y) {
+      this.reset();
+      this.build(0, 0);
+      this.player.x = 0;
+      this.player.y = 0;
     }
   }
 

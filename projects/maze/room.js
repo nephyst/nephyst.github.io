@@ -9,5 +9,10 @@ var Room = {
     obj.southWall = true;
     obj.visited = false;
     return obj;
+  },
+  reset: function() {
+    this.eastWall = true;
+    this.southWall = true;
+    this.visited = false;
   }
 }
