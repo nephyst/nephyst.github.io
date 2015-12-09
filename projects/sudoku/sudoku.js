@@ -283,7 +283,7 @@ window.onload = function() {
   function getCellValues(x, y) {
     var values = [];
     var random = new Array();
-    random.randomFill(9);
+    random.randomFillInt(9);
     var cellValues = data[x][y].values;
     for (var i = 0; i < random.length; i++) {
       if (cellValues[random[i] - 1]) {
