@@ -3,8 +3,8 @@ window.onload = function() {
     c = canvas.getContext("2d"),
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight,
-    roomSize = 20,
-    maze = Maze.create(Math.floor((width - roomSize) / roomSize), Math.floor((height - roomSize) / roomSize));
+    roomSize = 50,
+    maze = Maze.create(Math.floor(((width - roomSize) / roomSize) / 2), Math.floor((height - roomSize) / roomSize), 2);
 
   update();
 

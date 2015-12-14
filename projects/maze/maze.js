@@ -5,6 +5,8 @@ var Maze = {
     south: "south",
     east: "east",
     west: "west",
+    up: "up",
+    down: "down",
   }),
   player: {
     x: null,
@@ -19,7 +21,7 @@ var Maze = {
     y: null
   },
 
-  create: function(width, height) {
+  create: function(width, height, floors) {
     var obj = Object.create(this);
     obj.grid = new Array(width);
     for (var i = 0; i < obj.grid.length; i++) {
@@ -37,8 +39,8 @@ var Maze = {
   },
 
   draw: function(c, x, y, roomSize) {
-    c.strokeStyle = "#aaa";
-    c.lineWidth = 5;
+    c.strokeStyle = "#555";
+    c.lineWidth = 18;
     c.lineCap = "round";
     for (var i = 0; i < this.grid.length; i++) {
       var left = x + (i * roomSize);
