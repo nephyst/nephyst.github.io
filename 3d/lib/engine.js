@@ -30,25 +30,25 @@ var Engine;
     Device.prototype.clear = function() {
       this.context.clearRect(0, 0, this.width, this.height);
       this.backbuffer = this.context.getImageData(0, 0, this.width, this.height);
-      for(var i = 0; i < this.depthbuffer.length; i++) {
-          this.depthbuffer[i] = Infinity;
+      for (var i = 0; i < this.depthbuffer.length; i++) {
+        this.depthbuffer[i] = 10000000;
       }
     };
     Device.prototype.present = function() {
       this.context.putImageData(this.backbuffer, 0, 0);
     };
-    Device.prototype.project = function(coord, transMatrix) {
-      var point = BABYLON.Vector3.TransformCoordinates(coord, transMatrix);
-      var x = point.x * this.width + (this.width / 2.0) >> 0;
-      var y = -point.y * this.height + (this.height / 2.0) >> 0;
+    Device.prototype.project = function(coord, transMat) {
+      var point = BABYLON.Vector3.TransformCoordinates(coord, transMat);
+      var x = point.x * this.width + this.width / 2;
+      var y = -point.y * this.height + this.height / 2;
       return (new BABYLON.Vector3(x, y, point.z));
     };
     Device.prototype.putPixel = function(x, y, z, color) {
       this.backbufferdata = this.backbuffer.data;
       var index = ((x >> 0) + (y >> 0) * this.width);
       var index4 = index * 4;
-      if(this.depthbuffer[index] < z) {
-          return;
+      if (this.depthbuffer[index] < z) {
+        return;
       }
       this.depthbuffer[index] = z;
       this.backbufferdata[index4] = color.r * 255;
@@ -61,39 +61,64 @@ var Engine;
         this.putPixel(point.x, point.y, point.z, color);
       }
     };
-    Device.prototype.drawTriangle = function(p0, p1, p2, color) {
-      this.drawPoint(new BABYLON.Vector2(p0.x, p0.y), color);
-      this.drawPoint(new BABYLON.Vector2(p1.x, p1.y), color);
-      this.drawPoint(new BABYLON.Vector2(p2.x, p2.y), color);
-      if (p0.y > p1.y) {
-        var temp = p0;
-        p0 = p1;
+    Device.prototype.processScanLine = function(y, pa, pb, pc, pd, color) {
+      var normal1 = pa.y != pb.y ? (y - pa.y) / (pb.y - pa.y) : 1;
+      var normal2 = pc.y != pd.y ? (y - pc.y) / (pd.y - pc.y) : 1;
+      var sx = lerp(normal1, pa.x, pb.x) >> 0;
+      var ex = lerp(normal2, pc.x, pd.x) >> 0;
+      var z1 = lerp(normal1, pa.z, pb.z);
+      var z2 = lerp(normal2, pc.z, pd.z);
+      for (var x = sx; x < ex; x++) {
+        var z = map(x, sx, ex, z1, z1);
+        this.drawPoint(new BABYLON.Vector3(x, y, z), color);
+      }
+    };
+    Device.prototype.drawTriangle = function(p1, p2, p3, color) {
+      if (p1.y > p2.y) {
+        var temp = p2;
+        p2 = p1;
         p1 = temp;
       }
-      if (p0.y > p2.y) {
-        var temp = p0;
-        p0 = p2;
-        p2 = temp;
+      if (p2.y > p3.y) {
+        var temp = p2;
+        p2 = p3;
+        p3 = temp;
       }
       if (p1.y > p2.y) {
-        var temp = p1;
-        p1 = p2;
-        p2 = temp;
+        var temp = p2;
+        p2 = p1;
+        p1 = temp;
       }
-      var stepDirection = p1.x > p2.x ? 1 : -1;
-
-      for (var y = p0.y; y < p2.y; y++) {
-        var sx = map(y, p0.y, p2.y, p0.x, p2.x);
-        if (y <= p1.y) {
-          var ex = map(y, p0.y, p1.y, p0.x, p1.x);
-        } else {
-          var ex = map(y, p1.y, p2.y, p1.x, p2.x);
+      var dP1P2;
+      var dP1P3;
+      if (p2.y - p1.y > 0) {
+        dP1P2 = (p2.x - p1.x) / (p2.y - p1.y);
+      } else {
+        dP1P2 = 0;
+      }
+      if (p3.y - p1.y > 0) {
+        dP1P3 = (p3.x - p1.x) / (p3.y - p1.y);
+      } else {
+        dP1P3 = 0;
+      }
+      if (dP1P2 > dP1P3) {
+        for (var y = p1.y >> 0; y <= p3.y >> 0; y++) {
+          if (y < p2.y) {
+            this.processScanLine(y, p1, p3, p1, p2, color);
+          } else {
+            this.processScanLine(y, p1, p3, p2, p3, color);
+          }
         }
-        for (var x = sx; stepDirection > 0 ? x < ex : x > ex; x += stepDirection) {
-          this.drawPoint(new BABYLON.Vector2(x, y), color);
+      } else {
+        for (var y = p1.y >> 0; y <= p3.y >> 0; y++) {
+          if (y < p2.y) {
+            this.processScanLine(y, p1, p2, p1, p3, color);
+          } else {
+            this.processScanLine(y, p2, p3, p1, p3, color);
+          }
         }
       }
-    }
+    };
     Device.prototype.render = function(camera, meshes) {
       var viewMatrix = BABYLON.Matrix.LookAtLH(camera.Position, camera.Target, BABYLON.Vector3.Up());
       var projectionMatrix = BABYLON.Matrix.PerspectiveFovLH(0.78, this.width / this.height, 0.01, 1.0);

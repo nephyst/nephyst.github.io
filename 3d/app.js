@@ -38,9 +38,9 @@ window.onload = function() {
   */
 
   //var camera = new Engine.Camera();
-  var camera = new SoftEngine.Camera();
+  var camera = new Engine.Camera();
   //var device = new Engine.Device(canvas);
-  var device = new SoftEngine.Device(canvas);
+  var device = new Engine.Device(canvas);
   camera.Position = new BABYLON.Vector3(0, 0, -10);
   camera.Target = new BABYLON.Vector3(0, 0, 0);
   device.LoadJSONFileAsync("res/monkey.json", loadJSONCompleted);
