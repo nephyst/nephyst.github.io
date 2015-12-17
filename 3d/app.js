@@ -55,7 +55,7 @@ window.onload = function() {
 
     for (var i = 0; i < meshes.length; i++) {
       //meshes[i].Rotation.x += 0.005;
-      meshes[i].Rotation.y += 0.01;
+      meshes[i].Rotation.y += 0.005;
     }
 
     device.render(camera, meshes);
