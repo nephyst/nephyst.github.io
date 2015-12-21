@@ -4,6 +4,9 @@ window.onload = function() {
     width = canvas.width = window.innerWidth,
     height = canvas.height = window.innerHeight;
 
+  var strafeLeft = BABYLON.Matrix.Translation(-1, 0, 0);
+  var strafeRight = BABYLON.Matrix.Translation(1, 0, 0);
+
   /*
       var meshes = [];
       var mesh = new Engine.Mesh("Cube", 8);
@@ -54,8 +57,8 @@ window.onload = function() {
     device.clear();
 
     for (var i = 0; i < meshes.length; i++) {
-      //meshes[i].Rotation.x += 0.005;
-      meshes[i].Rotation.y += 0.005;
+      meshes[i].Rotation.x += 0.005;
+      //meshes[i].Rotation.y += 0.005;
     }
 
     device.render(camera, meshes);
@@ -63,5 +66,25 @@ window.onload = function() {
 
     requestAnimationFrame(update);
   }
+
+  document.body.addEventListener("keydown", function(event) {
+    switch (event.keyCode) {
+      case 37: //left
+        camera.Position = BABYLON.Vector3.TransformCoordinates(camera.Position, strafeLeft);
+        camera.Target = BABYLON.Vector3.TransformCoordinates(camera.Target, strafeLeft);
+        break;
+      case 38: //up
+        break;
+      case 39: //right
+        camera.Position = BABYLON.Vector3.TransformCoordinates(camera.Position, strafeRight);
+        camera.Target = BABYLON.Vector3.TransformCoordinates(camera.Target, strafeRight);
+        break;
+      case 40: //down
+        break;
+      default:
+        console.log(event.keyCode);
+        break;
+    }
+  });
 
 };
