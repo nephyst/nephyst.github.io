@@ -5,15 +5,18 @@ window.onload = function() {
     height = canvas.height = window.innerHeight,
     fl = 200,
     cards = [],
-    numCards = 1500,
+    numCards = 700,
     centerZ = 1000,
     baseAngle = 0,
     rotationSpeed = 0.02;
 
+    var bernie = new Image();
+    bernie.src = 'http://i.imgur.com/B7G8S6o.png';
+
   for (var i = 0; i < numCards; i += 1) {
     var card = {
       angle: randomRange(0, Math.PI * 2),
-      radius: randomRange(100, 1100),
+      radius: randomRange(50, 1200),
       y: randomRange(2000, -2000)
     };
     card.x = Math.cos(card.angle + baseAngle) * card.radius;
@@ -28,6 +31,8 @@ window.onload = function() {
     rotationSpeed = (event.clientX - width / 2) * 0.0001;
     ypos = (event.clientY - height / 2) * 2;
   });
+
+
 
   update();
 
@@ -44,14 +49,15 @@ window.onload = function() {
       context.translate(card.x, card.y);
       context.globalAlpha = map(card.y, 2000, -2000, 1, 0);
 
-      context.beginPath();
-      context.arc(0, 0, 20, 0, Math.PI * 2, false);
-      context.fill();
+      context.drawImage(bernie, 0, 0, 200, 200);
+      //context.beginPath();
+      //context.arc(0, 0, 20, 0, Math.PI * 2, false);
+      //context.fill();
 
       context.restore();
 
-      card.x = Math.cos(card.angle + baseAngle * (550 / card.radius)) * card.radius;
-      card.z = centerZ + Math.sin(card.angle + baseAngle * (550 / card.radius)) * card.radius;
+      card.x = Math.cos(card.angle + baseAngle * (400 / card.radius)) * card.radius;
+      card.z = centerZ + Math.sin(card.angle + baseAngle * (400 / card.radius)) * card.radius;
       card.y -= 10;
 
       if (card.y < -2000) {
