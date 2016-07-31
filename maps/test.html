@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css"/>
+    <style>
+        #mapid {
+            height: 650px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="mapid"></div>
+
+<script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+
+<script>
+    var map = L.map('mapid', {
+        crs: L.CRS.Simple,
+        attribution: false,
+        minZoom: -1,
+        maxZoom: 3,
+    });
+    //L.control.attribution().addAttribution('abc').addTo(map);
+    var bounds = [[-26.5, -25], [1021.5, 1023]];
+    var image = L.imageOverlay('http://leafletjs.com/examples/crs-simple/uqm_map_full.png', bounds, {attribution: 'Use a hoe, Andrews.'}).addTo(map);
+    map.fitBounds(bounds);
+</script>
+
+</body>
+</html>
