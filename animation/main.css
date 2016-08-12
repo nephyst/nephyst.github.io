@@ -97,6 +97,15 @@ ul.tab li a:focus, .active {
     width: 182px;
 }
 
+.imageControls {
+    display: none;
+}
+
+#spriteWidth, #spriteHeight {
+    width: 30px;
+    margin: 3px;
+}
+
 /* FOOTER STYLES */
 #frame-box {
     display: flex;
@@ -132,4 +141,3 @@ ul.tab li a:focus, .active {
 .selected {
     border: 2px solid black;
 }
-

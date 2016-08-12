@@ -19,9 +19,15 @@
             <input type="file" id="imageInput" name="imageInput"/>
             <label id="imageAdd" for="imageInput" class="button">+</label>
             <div id="imageRemove" class="button">-</div>
-            <br/>
+
             <select id="imageList" size="3">
             </select>
+
+            <div class="imageControls">
+                &nbsp;Width:<input id="spriteWidth" type="number" value="32"><br/>
+                Height:<input id="spriteHeight" type="number" value="32">
+                <div class="button">Process Sprites</div>
+            </div>
         </div>
         <div id="Frames" class="tabcontent">
             Frames
@@ -42,10 +48,10 @@
     <!--</div>-->
 </div>
 
-<footer id="footer">
-    <div id="addFrame" class="button">Add Frame</div>
-    <div id="frame-box"></div>
-</footer>
+<!--<footer id="footer">-->
+    <!--<div id="addFrame" class="button">Add Frame</div>-->
+    <!--<div id="frame-box"></div>-->
+<!--</footer>-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="main.js"></script>
