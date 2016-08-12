@@ -1,0 +1,135 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+.main {
+    flex: 1;
+    width: calc(100% - 12em);
+    height: 100%;
+}
+
+.left {
+    flex: 0 0 12em;
+    order: -1;
+
+    background: lightsteelblue;
+}
+
+.right {
+    flex: 0 0 12em;
+}
+
+footer {
+    background: lightsteelblue;
+    padding: 5px;
+}
+
+/* MAIN STYLES */
+#canvasWrapper {
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+}
+#canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* LEFT STYLES */
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+ul.tab li {
+    float: left;
+}
+
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 7px 7px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+ul.tab li a:hover {
+    background-color: #ddd;
+}
+
+ul.tab li a:focus, .active {
+    background-color: lightsteelblue;
+}
+
+.tabcontent {
+    display: none;
+    padding: 5px;
+}
+
+#imageInput {
+    display: none;
+}
+
+#imageAdd, #imageRemove {
+    width: 10px;
+}
+
+#imageList {
+    width: 182px;
+}
+
+/* FOOTER STYLES */
+#frame-box {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    overflow-x: scroll;
+    white-space: nowrap;
+    z-index: 100;
+}
+
+.button {
+    display: inline-block;
+    background: steelblue;
+    color: white;
+    text-align: center;
+
+    padding: 5px;
+    margin: 3px;
+
+}
+
+.frame {
+    box-sizing: border-box;
+    background: white;
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    margin: 3px;
+}
+
+.selected {
+    border: 2px solid black;
+}
+
