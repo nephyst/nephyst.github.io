@@ -7,6 +7,7 @@ var imageInput = $('#imageInput');
 var imageList = $('#imageList');
 var spriteWidth = $('#spriteWidth');
 var spriteHeight = $('#spriteHeight');
+var processSpritesButton = $('#processSprites');
 
 // Canvas background pattern
 var pattern = document.createElement('canvas');
@@ -51,6 +52,10 @@ spriteHeight.on('change textInput input', function (e) {
     var image = images[selectedImage];
     image.spriteHeight = parseInt($(this).val());
     drawUniformBoundaries();
+});
+
+processSpritesButton.on('click', function() {
+    processSprites();
 });
 
 function refreshImageList() {
