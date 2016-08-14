@@ -94,6 +94,7 @@ ul.tab li a:focus, .active {
 }
 
 #imageList {
+    margin: 3px;
     width: 182px;
 }
 
@@ -105,6 +106,17 @@ ul.tab li a:focus, .active {
     width: 30px;
     margin: 3px;
 }
+
+#spriteList {
+    background-color: white;
+    overflow: auto;
+    height: 350px;
+    margin: 3px;
+}
+#spriteList > img {
+    margin: 1px;
+}
+
 
 /* FOOTER STYLES */
 #frame-box {

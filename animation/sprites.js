@@ -22,7 +22,9 @@ resetCanvas();
 
 imageInput.on('change', function (e) {
     var file = e.target.files[0];
-
+    if(!file.name) {
+        return;
+    }
     var image = {};
     images.push(image);
     image.fileName = file.name;
@@ -118,4 +120,34 @@ function drawUniformBoundaries() {
             ctx.strokeRect(x, y, spriteWidth, spriteHeight);
         }
     }
+}
+
+function processSprites() {
+    var image = images[selectedImage];
+    var img = image.imageFile;
+
+    var spriteWidth = image.spriteWidth;
+    var spriteHeight = image.spriteHeight;
+    var imageWidth = image.imageFile.width;
+    var imageHeight = image.imageFile.height;
+
+    if (spriteWidth <= 0 || spriteHeight <= 0) {
+        return;
+    }
+
+    for (var y = 0; y < imageHeight; y += spriteHeight) {
+        for (var x = 0; x < imageWidth; x += spriteWidth) {
+            var spriteSrc = createSpritePng(img, x, y, spriteWidth, spriteHeight);
+            $('#spriteList').append($('<img>', {src: spriteSrc}))
+        }
+    }
+}
+
+var crop_canvas = document.createElement('canvas');
+function createSpritePng(image, x, y, width, height) {
+    crop_canvas.width = width;
+    crop_canvas.height = height;
+
+    crop_canvas.getContext('2d').drawImage(image, x, y, width, height, 0, 0, width, height);
+    return crop_canvas.toDataURL("image/png");
 }
