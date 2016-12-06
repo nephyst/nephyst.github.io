@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+    background: black;
+}
+
+.bg {
+    height: 100%;
+}
+
+div.container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+div.container div.align {
+    position: relative;
+    width: 10000px;
+    left: 50%;
+    margin: 0 0 0 -5000px;
+    text-align: center;
+}
