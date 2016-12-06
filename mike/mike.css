@@ -17,6 +17,11 @@ div.container div.align {
     position: relative;
     width: 10000px;
     left: 50%;
-    margin: 0 0 0 -5000px;
+    margin: 0 0 0 -5010px;
     text-align: center;
+}
+
+area {
+    display: block;
+    background-color: red;
 }
