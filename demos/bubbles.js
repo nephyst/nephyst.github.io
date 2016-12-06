@@ -10,8 +10,8 @@ window.onload = function() {
     baseAngle = 0,
     rotationSpeed = 0.02;
 
-    var bernie = new Image();
-    bernie.src = 'http://i.imgur.com/B7G8S6o.png';
+    // var bernie = new Image();
+    // bernie.src = 'http://i.imgur.com/B7G8S6o.png';
 
   for (var i = 0; i < numCards; i += 1) {
     var card = {
@@ -33,7 +33,6 @@ window.onload = function() {
   });
 
 
-
   update();
 
   function update() {
@@ -49,12 +48,12 @@ window.onload = function() {
       context.translate(card.x, card.y);
       context.globalAlpha = map(card.y, 2000, -2000, 1, 0);
 
-      context.drawImage(bernie, 0, 0, 200, 200);
-      //context.beginPath();
-      //context.arc(0, 0, 20, 0, Math.PI * 2, false);
-      //context.fill();
+      // context.drawImage(bernie, 0, 0, 200, 200);
+      context.beginPath();
+      context.arc(0, 0, 20, 0, Math.PI * 2, false);
+      context.fill();
 
-      context.restore();
+      context.restore();t
 
       card.x = Math.cos(card.angle + baseAngle * (400 / card.radius)) * card.radius;
       card.z = centerZ + Math.sin(card.angle + baseAngle * (400 / card.radius)) * card.radius;

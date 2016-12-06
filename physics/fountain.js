@@ -6,8 +6,8 @@ window.onload = function() {
     particles = [],
     gravity = 0.25;
 
-  var bernie = new Image();
-  bernie.src = 'http://i.imgur.com/B7G8S6o.png';
+  // var bernie = new Image();
+  // bernie.src = 'http://i.imgur.com/B7G8S6o.png';
 
   update();
 
@@ -37,10 +37,10 @@ window.onload = function() {
       c.beginPath();
       c.fillStyle = particle.color;
       c.arc(particle.x, particle.y, particle.radius * 0.9, 0, Math.PI * 2, false);
-      c.globalAlpha = 1;
+      // c.globalAlpha = 1;
       c.fill();
-      c.globalAlpha = 0.7;
-      c.drawImage(bernie, particle.x - particle.radius, particle.y - particle.radius, particle.radius * 2, particle.radius * 2);
+      // c.globalAlpha = 0.7;
+      // c.drawImage(bernie, particle.x - particle.radius, particle.y - particle.radius, particle.radius * 2, particle.radius * 2);
     }
     requestAnimationFrame(update);
   }
