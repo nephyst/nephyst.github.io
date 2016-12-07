@@ -10,7 +10,12 @@ function initMap() {
 
     map = new L.Map('map');
 
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}{r}.png', {
+    var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png';
+    if (location.protocol === 'https:') {
+        osmUrl = 'https://{s}.tile.osm.org/{z}/{x}/{y}{r}.png';
+    }
+
+    L.tileLayer(osmUrl, {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
