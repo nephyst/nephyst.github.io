@@ -12,7 +12,7 @@ function initMap() {
 
     var osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}{r}.png';
     if (location.protocol === 'https:') {
-        osmUrl = 'https://{s}.tile.osm.org/{z}/{x}/{y}{r}.png';
+        osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     }
 
     L.tileLayer(osmUrl, {
