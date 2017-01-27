@@ -53,7 +53,7 @@ window.onload = function() {
       context.arc(0, 0, 20, 0, Math.PI * 2, false);
       context.fill();
 
-      context.restore();t
+      context.restore();
 
       card.x = Math.cos(card.angle + baseAngle * (400 / card.radius)) * card.radius;
       card.z = centerZ + Math.sin(card.angle + baseAngle * (400 / card.radius)) * card.radius;
