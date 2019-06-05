@@ -4,9 +4,7 @@ export default class Random {
     constructor(seed) {
         switch (typeof seed) {
             case 'string':
-                console.log(seed);
                 seed = hashCode(seed);
-                console.log(seed);
                 break;
             case 'number':
                 //actually, this is fine.
