@@ -1,10 +1,18 @@
+
 export default class Room {
-    constructor(x, y) {
-        this._x = x;
-        this._y = y;
+
+    constructor(x, y, tileSize) {
+        this._pos = createVector(x, y);
+        this._tileSize = tileSize;
         this._east = true;
         this._south = true;
         this._visited = false;
+        this._neighbors = ['n', 's', 'e', 'w'];
+        this._walls = this.generateWalls(tileSize);
+    }
+
+    pos() {
+        return this._pos;
     }
 
     east(east) {
@@ -23,33 +31,52 @@ export default class Room {
         return this._visited;
     }
 
-    walls(tileSize) {
+    neighbors() {
+        return this._neighbors;
+    }
+
+    walls() {
         let walls = [];
-
-        //east
-        let x = 5 + tileSize + (tileSize * this._x);
-        let y1 = 5 + (tileSize * this._y);
-        let y2 = y1 + tileSize;
-        walls.push([x, y1, x, y2]);
-
-        //south
-        let y = 5 + tileSize + (tileSize * this._y);
-        let x1 = 5 + (tileSize * this._x);
-        let x2 = x1 + tileSize;
-        walls.push([x1, y, x2, y]);
-
+        if (this._east) {
+            walls.push(this._walls.east);
+        }
+        if (this._south) {
+            walls.push(this._walls.south);
+        }
         return walls;
     }
 
-    draw(tileSize) {
-        let walls = this.walls(tileSize);
+    draw() {
+        let walls = this._walls;
         if (this._east) {
-            let wall = walls[0];
-            line(wall[0], wall[1], wall[2], wall[3]);
+            line(walls.east.p0.x, walls.east.p0.y, walls.east.p1.x, walls.east.p1.y);
         }
         if (this._south) {
-            let wall = walls[1];
-            line(wall[0], wall[1], wall[2], wall[3]);
+            line(walls.south.p0.x, walls.south.p0.y, walls.south.p1.x, walls.south.p1.y);
         }
+    }
+
+    generateWalls(tileSize) {
+        let walls = {};
+
+        //east
+        let x = 5 + tileSize + (tileSize * this._pos.x);
+        let y1 = 5 + (tileSize * this._pos.y);
+        let y2 = y1 + tileSize;
+        walls.east = {
+            p0: createVector(x, y1),
+            p1: createVector(x, y2)
+        };
+
+        //south
+        let y = 5 + tileSize + (tileSize * this._pos.y);
+        let x1 = 5 + (tileSize * this._pos.x);
+        let x2 = x1 + tileSize;
+        walls.south = {
+            p0: createVector(x1, y),
+            p1: createVector(x2, y)
+        };
+
+        return walls;
     }
 }
